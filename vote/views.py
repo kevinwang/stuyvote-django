@@ -10,7 +10,5 @@ def form(request):
         s = Student.objects.get(osis=request.POST['osis'])
     except Student.DoesNotExist:
         return render_to_response('vote/swipe.html', {'error_message': 'Student does not exist.'}, context_instance=RequestContext(request))
-    candidates = Candidate.objects.filter(grade=s.grade)
-    if Vote.objects.filter(student=s).count() > 0:
-        return render_to_response('vote/swipe.html', {'error_message': 'You have already voted.'}, context_instance=RequestContext(request))
-    return render_to_response('vote/showchoices.html', {'candidates': candidates}, context_instance=RequestContext(request))
+    if not s.has_available_elections():
+        return render_to_response('vote/swipe.html', {'error_message': 'There are no available elections for this student.'}, context_instance=RequestContext(request))

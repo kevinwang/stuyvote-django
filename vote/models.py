@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
+from itertools import chain
 
 class Election(models.Model):
     name = models.CharField(max_length=200)
@@ -15,6 +16,18 @@ class Election(models.Model):
 class Student(models.Model):
     osis = models.IntegerField()
     grade = models.IntegerField()
+
+    def has_available_elections(self):
+        for election in Election.objects.filter(grade=0):
+            if not self.has_voted_in_election(election):
+                return True
+        for election in Election.objects.filter(grade=self.grade):
+            if not self.has_voted_in_election(election):
+                return True
+        return False
+
+    def has_voted_in_election(self, election):
+        return Vote.objects.filter(election=election).count() > 0
 
     def __unicode__(self):
         return str(self.osis)

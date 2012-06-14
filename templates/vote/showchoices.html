@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Stuyvesant Student Union Elections</title>
+        <script type="text/javascript">
+            function checkRadio() {
+                var choices = document.choices.choice_1;
+                for (var i = 0; i < choices.length; i++) {
+                    if (choices[i].checked) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            function validateForm() {
+                if (!checkRadio()) {
+                    document.getElementById("error").style.display = "block";
+                    return false;
+                }
+                return true;
+            }
+        </script>
+    </head>
+    <body>
+        <div align="center">
+            <h1>Stuyvesant Student Union Elections</h1>
+            <h2>Select a candidate</h2>
+            <div id="error" style="display: none;"><p><strong>You did not select a candidate.</strong></p></div>
+            <form action="/vote/" method="post" name="choices" onsubmit="return validateForm()">
+                {% csrf_token %}
+                <h3>Choice 1</h3>
+                {% for choice in candidates %}
+                <input type="radio" name="choice_1" id="choice_1_{{ forloop.counter }}" value="{{ choice.id }}" />
+                <label for="choice_1_{{ forloop.counter }}">{{ choice.name }}</label><br />
+                {% endfor %}
+                <h3>Choice 2 (optional)</h3>
+                {% for choice in candidates %}
+                <input type="radio" name="choice_2" id="choice_2_{{ forloop.counter }}" value="{{ choice.id }}" />
+                <label for="choice_2_{{ forloop.counter }}">{{ choice.name }}</label><br />
+                {% endfor %}
+                <br />
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+    </body>
+</html>

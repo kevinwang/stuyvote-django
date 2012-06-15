@@ -24,12 +24,20 @@ def vote(request):
     candidate_names = []
     for election in student.get_available_elections():
         try:
-            candidate_id = request.POST['election_' + str(election.id)]
+            choice_1_id = request.POST['election_' + str(election.id)]
         except MultiValueDictKeyError:
             continue
-        if candidate_id != '':
-            candidate = Candidate.objects.get(id=candidate_id)
-            candidate_names.append(candidate.__unicode__())
-            v = Vote(student=student, election=election, choice_1=candidate)
-            v.save()
+        try:
+            choice_2_id = request.POST['election_' + str(election.id) + '_2']
+        except MultiValueDictKeyError:
+            choice_2_id = ''
+        choice_1 = Candidate.objects.get(id=choice_1_id)
+        candidate_names.append(choice_1.__unicode__())
+        if choice_2_id != '' and choice_2_id != choice_1_id:
+            choice_2 = Candidate.objects.get(id=choice_2_id)
+            candidate_names.append(choice_2.__unicode__())
+            v = Vote(student=student, election=election, choice_1=choice_1, choice_2=choice_2)
+        else:
+            v = Vote(student=student, election=election, choice_1=choice_1)
+        v.save()
     return render_to_response('vote/vote.html', {'candidate_names': candidate_names})

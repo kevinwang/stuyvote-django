@@ -8,6 +8,12 @@
                 for(var i=0; i < radio.length; i++) {
                     radio[i].checked = false;
                 }
+                {% if election.can_choose_two_candidates %}
+                var radio = document.getElementsByName("election_{{ election.id }}_2");
+                for(var i=0; i < radio.length; i++) {
+                    radio[i].checked = false;
+                }
+                {% endif %}
                 {% endfor %}
                 return false;
             }
@@ -21,13 +27,23 @@
                 {% csrf_token %}
                 <input type="hidden" name="osis" value="{{ osis }}">
                 {% for election in elections %}
-                <h2>{{ election.name }}</h2>
-                {% for candidate in candidates %}
-                {% ifequal candidate.election election %}
-                <input type="radio" name="election_{{ election.id }}" id="choice_{{ election.id }}_{{ forloop.counter }}" value="{{ candidate.id }}" />
-                <label for="choice_{{ election.id }}_{{ forloop.counter }}">{{ candidate.name }}</label><br />
-                {% endifequal %}
-                {% endfor %}
+                    <h2>{{ election.name }}</h2>
+                    {% if election.can_choose_two_candidates %}<h3>Choice 1</h3>{% endif %}
+                    {% for candidate in candidates %}
+                        {% ifequal candidate.election election %}
+                            <input type="radio" name="election_{{ election.id }}" id="choice_{{ election.id }}_{{ forloop.counter }}" value="{{ candidate.id }}" />
+                            <label for="choice_{{ election.id }}_{{ forloop.counter }}">{{ candidate.name }}</label><br />
+                        {% endifequal %}
+                    {% endfor %}
+                    {% if election.can_choose_two_candidates %}
+                        <h3>Choice 2 (optional)</h3>
+                        {% for candidate in candidates %}
+                            {% ifequal candidate.election election %}
+                                <input type="radio" name="election_{{ election.id }}_2" id="choice_{{ election.id }}_{{ forloop.counter }}_2" value="{{ candidate.id }}" />
+                                <label for="choice_{{ election.id }}_{{ forloop.counter }}_2">{{ candidate.name }}</label><br />
+                            {% endifequal %}
+                        {% endfor %}
+                    {% endif %}
                 {% endfor %}
                 <br />
                 <button type="button" onclick="clearRadios()">Clear</button>

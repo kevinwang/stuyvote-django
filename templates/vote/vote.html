@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>Stuyvesant Student Union Elections</title>
+        <meta http-equiv="refresh" content="2;url=/">
+    </head>
+    <body oncontextmenu="return false;" style="font-family: Tahoma, Geneva, sans-serif;">
+        <div align="center">
+            <h1>Stuyvesant Student Union Elections</h1>
+            {% if not candidate_names %}
+            <p>You did not vote in any of the elections.</p>
+            {% else %}
+            <p>You have successfully voted for the following candidates:</p>
+            {% for name in candidate_names %}
+            {{ name }}<br />
+            {% endfor %}
+            {% endif %}
+        </div>
+    </body>
+</html>

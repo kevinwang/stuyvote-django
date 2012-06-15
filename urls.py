@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'stuyvote.views.home', name='home'),
     url(r'^$', 'vote.views.form'),
+    url(r'^vote/', 'vote.views.vote'),
     # url(r'^stuyvote/', include('stuyvote.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

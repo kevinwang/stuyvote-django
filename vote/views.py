@@ -7,6 +7,10 @@ def form(request):
     if request.POST == {} or request.POST['osis'] == '':
         return render_to_response('vote/swipe.html', context_instance=RequestContext(request))
     try:
+        int(request.POST['osis'])
+    except ValueError:
+        return render_to_response('vote/swipe.html', {'error_message': 'Invalid input.'}, context_instance=RequestContext(request))
+    try:
         student = Student.objects.get(osis=request.POST['osis'])
     except Student.DoesNotExist:
         return render_to_response('vote/swipe.html', {'error_message': 'Student does not exist.'}, context_instance=RequestContext(request))

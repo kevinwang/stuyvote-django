@@ -42,7 +42,7 @@ class Candidate(models.Model):
         return Vote.objects.filter(choice_1=self).count() + Vote.objects.filter(choice_2=self).count()
 
     def __unicode__(self):
-        return self.name
+        return self.name + ' - ' + self.election.name
 
 class Vote(models.Model):
     student = models.ForeignKey(Student)

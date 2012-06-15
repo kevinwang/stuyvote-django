@@ -10,6 +10,9 @@ class Election(models.Model):
 
     can_choose_two_candidates.boolean = True;
 
+    def all_candidates(self):
+        return Vote.objects.filter(election=self)
+
     def __unicode__(self):
         return self.name;
 
@@ -17,17 +20,16 @@ class Student(models.Model):
     osis = models.IntegerField()
     grade = models.IntegerField()
 
-    def has_available_elections(self):
-        for election in Election.objects.filter(grade=0):
-            if not self.has_voted_in_election(election):
-                return True
-        for election in Election.objects.filter(grade=self.grade):
-            if not self.has_voted_in_election(election):
-                return True
-        return False
+    def get_available_elections(self):
+        all_elections = list(chain(Election.objects.filter(grade=0), Election.objects.filter(grade=self.grade)))
+        available_elections = filter(self.has_not_voted_in_election, all_elections)
+        return available_elections
 
-    def has_voted_in_election(self, election):
-        return Vote.objects.filter(election=election).count() > 0
+    def has_available_elections(self):
+        return len(self.get_available_elections()) > 0
+
+    def has_not_voted_in_election(self, election):
+        return Vote.objects.filter(student=self, election=election).count() == 0
 
     def __unicode__(self):
         return str(self.osis)

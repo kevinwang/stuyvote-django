@@ -11,7 +11,7 @@ class CandidateAdmin(admin.ModelAdmin):
     list_display = ('name', 'election', 'total_votes')
 
 class VoteAdmin(admin.ModelAdmin):
-    list_display = ('student', 'election', 'choice_1', 'choice_2')
+    list_display = ('student', 'election', 'choice_1', 'choice_2', 'time_voted')
 
 admin.site.register(Election, ElectionAdmin)
 admin.site.register(Student, StudentAdmin)

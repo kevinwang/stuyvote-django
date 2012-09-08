@@ -22,7 +22,10 @@ class Student(models.Model):
     grade = models.IntegerField()
 
     def get_available_elections(self):
-        all_elections = list(chain(Election.objects.filter(grade=0), Election.objects.filter(grade=self.grade)))
+        if self.grade == 12:
+            all_elections = Election.objects.filter(grade=self.grade)
+        else:
+            all_elections = list(chain(Election.objects.filter(grade=0), Election.objects.filter(grade=self.grade)))
         available_elections = filter(self.has_not_voted_in_election, all_elections)
         return available_elections
 

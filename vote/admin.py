@@ -5,7 +5,7 @@ class ElectionAdmin(admin.ModelAdmin):
     list_display = ('name', 'grade', 'can_choose_two_candidates')
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('osis', 'grade')
+    list_display = ('osis_digest', 'grade')
 
 class CandidateAdmin(admin.ModelAdmin):
     list_display = ('name', 'election', 'total_votes')

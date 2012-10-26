@@ -25,7 +25,7 @@
             <p>If you do not wish to vote in a particular election, leave it blank.</p>
             <form action="/vote/" method="post" name="choices">
                 {% csrf_token %}
-                <input type="hidden" name="osis" value="{{ osis }}">
+                <input type="hidden" name="osis_digest" value="{{ osis_digest }}">
                 {% for election in elections %}
                     <h2>{{ election.name }}</h2>
                     {% if election.can_choose_two_candidates %}<h3>Choice 1</h3>{% endif %}

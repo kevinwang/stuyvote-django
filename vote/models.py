@@ -18,7 +18,7 @@ class Election(models.Model):
         return self.name;
 
 class Student(models.Model):
-    osis = models.IntegerField()
+    osis_digest = models.CharField(max_length=32)
     grade = models.IntegerField()
 
     def get_available_elections(self):
@@ -36,7 +36,7 @@ class Student(models.Model):
         return Vote.objects.filter(student=self, election=election).count() == 0
 
     def __unicode__(self):
-        return str(self.osis)
+        return str(self.osis_digest)
 
 class Candidate(models.Model):
     name = models.CharField(max_length=200)

@@ -8,8 +8,10 @@ class Election(models.Model):
     name = models.CharField(max_length=200)
     grade = models.IntegerField()
     can_choose_two_candidates = models.BooleanField()
+    enabled = models.BooleanField()
 
     can_choose_two_candidates.boolean = True;
+    enabled.boolean = True;
 
     def all_candidates(self):
         return Vote.objects.filter(election=self)
@@ -23,9 +25,9 @@ class Student(models.Model):
 
     def get_available_elections(self):
         if self.grade == 12:
-            all_elections = Election.objects.filter(grade=self.grade)
+            all_elections = Election.objects.filter(grade=self.grade, enabled=True)
         else:
-            all_elections = list(chain(Election.objects.filter(grade=0), Election.objects.filter(grade=self.grade)))
+            all_elections = list(chain(Election.objects.filter(grade=0, enabled=True), Election.objects.filter(grade=self.grade, enabled=True)))
         available_elections = filter(self.has_not_voted_in_election, all_elections)
         return available_elections
 

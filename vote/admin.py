@@ -2,7 +2,7 @@ from vote.models import *
 from django.contrib import admin
 
 class ElectionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'grade', 'can_choose_two_candidates')
+    list_display = ('name', 'grade', 'can_choose_two_candidates', 'enabled')
 
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('osis_digest', 'grade')

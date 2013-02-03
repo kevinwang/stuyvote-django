@@ -25,9 +25,9 @@ class Student(models.Model):
 
     def get_available_elections(self):
         if self.grade == 12:
-            all_elections = Election.objects.filter(grade=self.grade, enabled=True)
-        else:
             all_elections = list(chain(Election.objects.filter(grade=0, enabled=True), Election.objects.filter(grade=self.grade, enabled=True)))
+        else:
+            all_elections = list(chain(Election.objects.filter(grade=0, enabled=True), Election.objects.filter(grade=1, enabled=True), Election.objects.filter(grade=self.grade, enabled=True)))
         available_elections = filter(self.has_not_voted_in_election, all_elections)
         return available_elections
 

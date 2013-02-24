@@ -1,6 +1,17 @@
 <html>
     <head>
-        <title>Stuyvesant Student Union Elections</title>
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:800,700,400" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            body {
+                font-family: 'Open Sans', sans-serif;
+            }
+            h1 {
+                font-weight: 800;
+                font-size: 3em;
+                text-transform: uppercase;
+            }
+        </style>
+        <title>Stuyvote</title>
         <script type="text/javascript">
             function clearRadios() {
                 {% for election in elections %}
@@ -19,9 +30,9 @@
             }
         </script>
     </head>
-    <body oncontextmenu="return false;" style="font-family: Tahoma, Geneva, sans-serif;">
+    <body oncontextmenu="return false;">
         <div align="center">
-            <h1>Stuyvesant Student Union Elections</h1>
+            <h1>Stuyvote</h1>
             <p>If you do not wish to vote in a particular election, leave it blank.</p>
             <form action="/vote/" method="post" name="choices">
                 {% csrf_token %}

@@ -1,11 +1,22 @@
 <html>
     <head>
-        <title>Stuyvesant Student Union Elections</title>
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:800,700,400" rel="stylesheet" type="text/css">
+        <style type="text/css">
+            body {
+                font-family: 'Open Sans', sans-serif;
+            }
+            h1 {
+                font-weight: 800;
+                font-size: 3em;
+                text-transform: uppercase;
+            }
+        </style>
+        <title>Stuyvote</title>
         <meta http-equiv="refresh" content="2;url=/">
     </head>
-    <body oncontextmenu="return false;" style="font-family: Tahoma, Geneva, sans-serif;">
+    <body oncontextmenu="return false;">
         <div align="center">
-            <h1>Stuyvesant Student Union Elections</h1>
+            <h1>Stuyvote</h1>
             {% if not candidate_names %}
             <p>You did not vote in any of the elections.</p>
             {% else %}
